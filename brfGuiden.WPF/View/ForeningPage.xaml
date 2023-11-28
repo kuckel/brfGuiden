@@ -1,0 +1,115 @@
+﻿<Page x:Class="brfGuiden.WPF.View.ForeningPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:brfGuiden.WPF.View"
+      xmlns:viewmodel="clr-namespace:brfGuiden.WPF.ViewModel"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+       d:DataContext="{d:DesignInstance local:ForeningPage, IsDesignTimeCreatable=False}" 
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="20"
+      Title="Förening"      
+      mc:Ignorable="d"  d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="40" />
+            <RowDefinition  Height="*"/>            
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />            
+        </Grid.ColumnDefinitions>
+
+        <Label  Content="Föreningen" Padding="0" Style="{StaticResource H1Style}" Margin="0" Grid.Column="0" Grid.Row="0" ></Label>
+        <Label  Content="xxx" Style="{StaticResource H2Style}"  Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Right" x:Name="lblForeningNamn"></Label>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0 10 0 0" HorizontalAlignment="Stretch" Width="auto" >
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />                
+            </Grid.ColumnDefinitions>
+
+            <!-- DatabaseID -->
+            <StackPanel Margin="0 10 0 7" Grid.Row="0" Grid.ColumnSpan="2">
+                <Label Content="DatabasID:" Target="{Binding ElementName=lblID}" />
+                <Border Margin="0 0 0 10" BorderBrush="#606060" CornerRadius="5" Background="#383838"  BorderThickness="1" Padding="7" Width="auto" HorizontalAlignment="Stretch">
+                 <Label  Name="lblID" Content="AFH88-EER639-FG4774"/>               
+                </Border>                
+            </StackPanel>
+            <!-- /DatabaseID -->
+
+            <!-- Forening Namn -->
+            <StackPanel Margin="0 0 7 10" Grid.Row="1" Grid.Column="0">
+                <Label Content="Föreningens namn:" Target="{Binding ElementName=txtNamn}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtNamn"  MaxLength="40"
+                     PlaceholderText="Föreningens namn" BorderThickness="1" BorderBrush="#606060" />
+            </StackPanel>
+            <!-- /Forening Namn -->
+
+
+            <!-- Forening OrgNr -->
+            <StackPanel Margin="7 0 0 10" Grid.Row="1" Grid.Column="1">
+                <Label Content="OrganisationsNummer:" Target="{Binding ElementName=txtOrgNr}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtOrgNr"  MaxLength="10"
+                      PlaceholderText="Organisationsnummer" Text="{Binding Path=(Validation.Errors)/ErrorContent, ElementName=txtOrgNr}" 
+                      BorderThickness="1" BorderBrush="#606060" />
+            </StackPanel>
+            <!-- /Forening OrgNr -->
+
+            <!-- Forening Adress-->
+            <StackPanel Margin="0 5 7 10" Grid.Row="2" Grid.Column="0">
+                <Label Content="Föreningens adress:" Target="{Binding ElementName=txtAdress}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtAdress"  MaxLength="40"
+                      PlaceholderText="Adress/Gata" BorderThickness="1" BorderBrush="#606060" />
+            </StackPanel>
+            <!-- /Forening Adress -->
+            
+            <!-- Forening PostNummer-->
+            <StackPanel Margin="7 5 0 10" Grid.Row="2" Grid.Column="1">
+                <Label Content="Postnummer:" Target="{Binding ElementName=txtPostNr}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtPostNr"  MaxLength="6"
+                      PlaceholderText="PostNummer" Text="{Binding Path=(Validation.Errors)/ErrorContent, ElementName=txtPostNr}" 
+                             BorderThickness="1" BorderBrush="#606060" />
+            </StackPanel>
+            <!-- /Forening PostNummer -->
+
+
+            <!-- Forening PostOrt -->
+            <StackPanel Margin="0 0 7 10" Grid.Row="3" Grid.Column="0">
+                <Label Content="Postort:" Target="{Binding ElementName=txtPostOrt}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtPostOrt"  MaxLength="40"
+                      PlaceholderText="Postort" BorderThickness="1" BorderBrush="#606060" />
+            </StackPanel>
+            <!-- /Forening PostOrt -->
+
+            <!-- Forening Hemsida -->
+            <StackPanel Margin="7 0 0 10" Grid.Row="3" Grid.Column="1">
+                <Label Content="Hemsida:" Target="{Binding ElementName=txtHemsida}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtHemsida"  MaxLength="40"
+                      PlaceholderText="www.hemsida.se" BorderThickness="1" BorderBrush="#606060" />
+            </StackPanel>
+            <!-- /Forening Hemsida -->
+
+            <!-- Spara knappen -->
+            <StackPanel Margin="0 15 0 10" Grid.Row="4" Grid.ColumnSpan="2">
+                <ui:Button Style="{StaticResource BlueButtonStyle}" Icon="Save16" Content=" Spara "   HorizontalAlignment="Stretch"/>
+            </StackPanel> 
+            <!-- /Spara knappen -->                
+
+
+        </Grid>
+          
+        
+
+
+    </Grid>
+</Page>
