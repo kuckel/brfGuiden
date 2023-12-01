@@ -146,17 +146,52 @@
     </Style>
 
     <!-- Page Header -->
-    <Style x:Key="H1Style" TargetType="{x:Type Label}">
+    <Style x:Key="HeaderOneStyle" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="#B3B3B3" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Padding" Value="0" />        
     </Style>
 
-    <Style x:Key="H2Style" TargetType="{x:Type Label}">
+    <Style x:Key="HeaderTwoStyle" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="#B3B3B3" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Padding" Value="0" />
     </Style>
+
+
+    <!-- TEXTBOX FOCUS -->
+    <Style x:Key="TextboxStyle" TargetType="TextBox">
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Foreground"  Value="#ffffff" />
+        <Setter Property="FontSize" Value="14" />
+            
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="border"
+                        Background="#353535"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Focusable="false"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#3385ff" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1" />
+                            <Setter TargetName="border" Property="Background" Value="#000000" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>    
 
 
 

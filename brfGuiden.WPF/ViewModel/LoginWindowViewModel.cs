@@ -14,9 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Wpf.Ui.Contracts;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Services;
+
 
 namespace brfGuiden.WPF.ViewModel
 {

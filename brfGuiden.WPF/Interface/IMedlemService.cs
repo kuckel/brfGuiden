@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace brfGuiden.WPF.Interface
 {
-    public interface IForeningService
+    public interface IMedlemService
     {
-        public brfGuiden.Models.Forening GetForening();
-        Forening UpdateForening(Forening forening);
 
-        Forening AddForening(Forening forening);
+        List<Medlem> GetMedlemmar();
+
+         Medlem GetMedlem(string id);
     }
 }
+                                                     

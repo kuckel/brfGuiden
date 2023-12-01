@@ -10,12 +10,11 @@ using brfGuiden.Core.Service;
 using brfGuiden.WPF.View;
 using brfGuiden.WPF.Helper;
 using System.IO;
-using Wpf.Ui.Contracts;
-using Wpf.Ui.Services;
+
 using brfGuiden.WPF.Interface;
 using brfGuiden.WPF.Service;
 using brfGuiden.Models;
-
+using Wpf.Ui;
 
 namespace brfGuiden.WPF
 {
@@ -26,8 +25,8 @@ namespace brfGuiden.WPF
     {
 
 
-        private Util? _util;
-        private ConfigHelper? _configHelper;
+        private Util _util;
+        private ConfigHelper _configHelper;
         public static IServiceProvider ServiceProvider { get; set; }
 
 
@@ -42,6 +41,11 @@ namespace brfGuiden.WPF
             services.AddScoped<IForeningService, ForeningService>();
             services.AddScoped<IStyrelseService, StyrelseService>();
             services.AddScoped<IServiceProvider, ServiceProvider>();
+            services.AddScoped<ISnackbarService, SnackbarService >();
+            services.AddScoped<IContentDialogService, ContentDialogService>();
+
+            
+            services.AddSingleton<IContentDialogService, ContentDialogService>();
 
             // View-models
             services.AddTransient<BostadPageViewModel>();
@@ -51,6 +55,9 @@ namespace brfGuiden.WPF
             services.AddTransient<MedlemPageViewModel>();
             services.AddTransient<StyrelsePageViewModel>();
             services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<LoadingWindow>();
+            services.AddTransient<dataContext>();
+
             ServiceProvider = services.BuildServiceProvider();
 
 

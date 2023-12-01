@@ -11,9 +11,9 @@ namespace brfGuiden.WPF.ViewModel
 {
     public partial class BostadPageViewModel: ObservableObject
     {
-        private readonly IStyrelseService? _foreningService;
+      
 
-        public BostadPageViewModel(IStyrelseService foreningservice)
+        public BostadPageViewModel()
         {
 
 

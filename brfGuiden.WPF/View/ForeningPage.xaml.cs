@@ -13,8 +13,9 @@ namespace brfGuiden.WPF.View
     {
         public ForeningPage() 
         {
-            InitializeComponent();
             DataContext = App.ServiceProvider.GetService<ForeningPageViewModel>();
+            InitializeComponent();
+ 
         }            
 
     }

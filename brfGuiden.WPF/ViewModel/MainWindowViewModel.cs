@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace brfGuiden.WPF.ViewModel
@@ -26,12 +26,9 @@ namespace brfGuiden.WPF.ViewModel
 
         public MainWindowViewModel()
         {
-            _configHelper = new ConfigHelper();             
+            _configHelper = new ConfigHelper();
+            
         }
-
-
-
-
 
 
 
