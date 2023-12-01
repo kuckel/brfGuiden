@@ -28,28 +28,38 @@ namespace brfGuiden.WPF.ViewModel
 
      
         private readonly IForeningService? _foreningService;
-        private Util? _util;
-
+        private readonly Util? _util;
+        private Forening? _forening;
 
         public ForeningPageViewModel(IForeningService foreningservice)
         {
             _foreningService = foreningservice;
             
             _util= new Util();
-            _forening = _foreningService.GetForening(); 
-            if(_forening==null)//First time
+            _forening = _foreningService.GetForening();
+            
+            if(_forening==null)//First time use
             {
                 Forening newForening = new Forening();
                 newForening.ForeningId = "00000000-0000-0000-0000-000000000000";
                 _foreningService.AddForening(newForening); 
             }
+
+        }
+
+        [RelayCommand]
+        public void Reload()
+        {
+            if (_forening != null)
+            {
+              _forening = _foreningService.GetForening();               
+            }
+
         }
 
 
+      
         
-        private Forening? _forening;
-
-       
         public Forening Forening
         {
             get { return _forening; }
@@ -57,6 +67,7 @@ namespace brfGuiden.WPF.ViewModel
             {
                 _forening = value;
                 OnPropertyChanged(nameof(Forening));
+                MessageBox.Show("PropChanged");
             }
         }
 
@@ -107,6 +118,12 @@ namespace brfGuiden.WPF.ViewModel
         }
 
 
+        private async void TimeLoop(int ms)
+        {
+            await Task.Delay(ms);
+        }
+
+
         [RelayCommand]
         public void DoUpdate()
         {
@@ -121,9 +138,23 @@ namespace brfGuiden.WPF.ViewModel
                 Forening updForening = _foreningService.UpdateForening(_forening);
                 if (updForening != null)
                 {
-                    System.Threading.Thread.Sleep(3000);
-                    //TimeLoop(2000);
-                    
+
+                    // Show loading
+                    LoadingWindow lw = new LoadingWindow();
+                    lw.TimeSleep = 4000;
+                    lw.Owner = Application.Current.MainWindow;
+                    foreach (var window in Application.Current.Windows)
+                    {
+                        if (window is MainWindow)
+                        {
+                            lw.Width = ((Window)window).Width;
+                            lw.Height = ((Window)window).Height;
+
+                        }
+                    }
+                    lw.ShowDialog();
+
+
                 }
                 else
                 {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using brfGuiden.WPF.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +20,11 @@ namespace brfGuiden.WPF.View
     /// <summary>
     /// Interaction logic for Leverantorer.xaml
     /// </summary>
-    public partial class Leverantorer 
+    public partial class LeverantorPage
     {
-        public Leverantorer()
+        public LeverantorPage()
         {
+            DataContext = App.ServiceProvider.GetService<LeverantorPageViewModel>();
             InitializeComponent();
         }
     }

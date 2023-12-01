@@ -50,8 +50,8 @@
                         <ui:SymbolIcon Symbol="Gavel20" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                
-                <ui:NavigationViewItem Content="Leverantörer" TargetPageType="{x:Type pages:Leverantorer }">
+
+                <ui:NavigationViewItem Content="Leverantörer" TargetPageType="{x:Type pages:LeverantorPage }">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="VehicleTruckCube24" />
                     </ui:NavigationViewItem.Icon>                    

@@ -7,12 +7,12 @@
       xmlns:viewmodel="clr-namespace:brfGuiden.WPF.ViewModel"
       xmlns:helpers="clr-namespace:brfGuiden.WPF.Helper"      
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      
-       d:DataContext="{d:DesignInstance viewmodel:ForeningPageViewModel, IsDesignTimeCreatable=False}" 
+      d:DataContext="{d:DesignInstance viewmodel:ForeningPageViewModel, IsDesignTimeCreatable=False}" 
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="20"
-      Title="{Binding Forening.Namn}"      
-      mc:Ignorable="d"  d:DesignHeight="450" d:DesignWidth="800">
+      Title="{Binding Forening.Namn}" mc:Ignorable="d"  d:DesignHeight="450" d:DesignWidth="800">      
+           
+
  
     <Page.Resources>
         <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -29,9 +29,9 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />            
         </Grid.ColumnDefinitions>
-
-        <Label  Content="Föreningen" Padding="0" Style="{StaticResource HeaderOneStyle}" Margin="0" Grid.Column="0" Grid.Row="0" ></Label>
-        <Label  Content="{Binding Forening.Namn}" Style="{StaticResource HeaderTwoStyle}"  Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Right" x:Name="lblForeningNamn"></Label>
+        
+        <ui:TextBlock  Text="Förening" Style="{StaticResource H1Style}" Margin="0" Grid.Column="0" Grid.Row="0"/>
+        <ui:TextBlock Text="{Binding Forening.Namn}" HorizontalAlignment="Right" Style="{StaticResource H2Style}"  Grid.Column="1" Grid.Row="0" />
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0 10 0 0" HorizontalAlignment="Stretch" Width="auto" >
             <Grid.RowDefinitions>
@@ -61,8 +61,9 @@
                 <Label Content="Föreningens namn:" Target="{Binding ElementName=txtNamn}" />
                 <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtNamn"  MaxLength="40"
                    helpers:FocusExtension.IsFocused="{Binding IsNameFocused}"   PlaceholderText="Föreningens namn" 
-                  Style="{StaticResource TextboxStyle}"  Text="{Binding Forening.Namn, Mode=TwoWay}"  />
-                <TextBlock Text="{Binding TxtNameErrorMessage}" Foreground="Red"  Padding="0" Margin="0" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Forening.Namn, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                    <!-- VALIDATION -->
+                    <TextBlock Text="{Binding TxtNameErrorMessage}" Foreground="Red"  Padding="0" Margin="0" 
                  Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}"
                  Height="{Binding HasErrors, Converter={StaticResource BooleanToHeightConverter}}"/>
             </StackPanel>
@@ -73,8 +74,10 @@
             <StackPanel Margin="7 0 0 10" Grid.Row="1" Grid.Column="1">
                 <Label Content="OrganisationsNummer:" Target="{Binding ElementName=txtOrgNr}" />
                 <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtOrgNr"  MaxLength="12"
-                    helpers:FocusExtension.IsFocused="{Binding IsOrgNrFocused}"   PlaceholderText="Organisationsnummer" Text="{Binding Forening.OrgNr, Mode=TwoWay}"
+                helpers:FocusExtension.IsFocused="{Binding IsOrgNrFocused}"   PlaceholderText="Organisationsnummer" 
+                Text="{Binding Forening.OrgNr, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    Style="{StaticResource TextboxStyle}"  />
+                
                 <TextBlock Text="{Binding TxtOrgNrErrorMessage}" Foreground="Red"  Padding="0" Margin="0" 
                  Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}"
                  Height="{Binding HasErrors, Converter={StaticResource BooleanToHeightConverter}}"/>                
@@ -85,7 +88,7 @@
             <StackPanel Margin="0 5 7 10" Grid.Row="2" Grid.Column="0">
                 <Label Content="Föreningens adress:" Target="{Binding ElementName=txtAdress}" />
                 <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtAdress"  MaxLength="40"
-                Style="{StaticResource TextboxStyle}"   Text="{Binding Forening.Adress, Mode=TwoWay}"   
+                Style="{StaticResource TextboxStyle}"   Text="{Binding Forening.Adress, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
                              PlaceholderText="Adress/Gata"  />
             </StackPanel>
             <!-- /FORENING ADRESS -->
@@ -94,7 +97,7 @@
             <StackPanel Margin="7 5 0 10" Grid.Row="2" Grid.Column="1">
                 <Label Content="Postnummer:" Target="{Binding ElementName=txtPostNr}" />
                 <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtPostNr"  MaxLength="6"
-                      PlaceholderText="PostNummer" Text="{Binding Forening.PostNr, Mode=TwoWay}" 
+                      PlaceholderText="PostNummer" Text="{Binding Forening.PostNr, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                        Style="{StaticResource TextboxStyle}"  />
             </StackPanel>
             <!-- /FORENING POSTNUMMER -->
@@ -104,7 +107,7 @@
             <StackPanel Margin="0 0 7 10" Grid.Row="3" Grid.Column="0">
                 <Label Content="Postort:" Target="{Binding ElementName=txtPostOrt}" />
                 <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtPostOrt"  MaxLength="40"
-                Style="{StaticResource TextboxStyle}"  Text="{Binding Forening.PostOrt, Mode=TwoWay}"    
+                Style="{StaticResource TextboxStyle}"  Text="{Binding Forening.PostOrt, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    
                              PlaceholderText="Postort"  />
             </StackPanel>
             <!-- /FORENING POSTORT -->
@@ -115,7 +118,7 @@
                 <Label Content="Hemsida:" Target="{Binding ElementName=txtHemsida}" />
                 <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtHemsida"  MaxLength="40"
                 PlaceholderText="www.hemsida.se" Style="{StaticResource TextboxStyle}" 
-                 Text="{Binding Forening.Hemsida, Mode=TwoWay}"/>
+                 Text="{Binding Forening.Hemsida, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                            
             </StackPanel>
             <!-- /FORENING HEMSIDA -->

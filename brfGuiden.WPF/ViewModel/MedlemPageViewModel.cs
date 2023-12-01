@@ -17,8 +17,8 @@ namespace brfGuiden.WPF.ViewModel
         {
 
             _foreningService= foreningservice;
-            //_foreningService = App.ServiceProvider.GetService<IForeningService>();
-            Forening forening = _foreningService.GetForening(); 
+            Forening forening = _foreningService.GetForening();    
+
         }
 
     }
