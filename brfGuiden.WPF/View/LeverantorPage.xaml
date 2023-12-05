@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:brfGuiden.WPF.View"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       d:DataContext="{d:DesignInstance local:DashboardPage, IsDesignTimeCreatable=False}"  
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -12,52 +13,72 @@
       mc:Ignorable="d"  d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition  Height="40" />
-            <RowDefinition  Height="40" />            
+            <RowDefinition  Height="60" />            
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-           
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>             
+         
 
-            <!-- HEADER -->
-            <ui:TextBlock  Text="Leverantörer" Style="{StaticResource H1Style}" Margin="0" Grid.Column="0" Grid.Row="0"/>
-            <ui:TextBlock Text="" HorizontalAlignment="Right" Style="{StaticResource H2Style}"  Grid.Column="1" Grid.Row="0" />
 
             <!-- BUTTON HEADER -->
-            <StackPanel Grid.Row="1" Grid.Column="0" Width="auto" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="0" Grid.Column="0" Width="auto" >
             <Grid>
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition  Width="auto"/>
+                    <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="auto"/>
-                    <ColumnDefinition  Width="*"/>                    
+                    <ColumnDefinition  Width="auto"/>
+                    <ColumnDefinition  Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition  Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ui:Button Appearance="Primary"  Content="Ny leverantör" Grid.Column="0" Grid.Row="0" Margin="0 0 10 0"/>
-                <ui:Button Appearance="Primary"  Content="Radera" Grid.Column="1" Grid.Row="0" Margin="0 0 10 0"/>
-                <ui:Button Appearance="Primary"  Content="Ändra" Grid.Column="2" Grid.Row="0" />                
+
+                <ui:TextBlock  Text="Leverantörer" Style="{StaticResource H1Style}" Margin="0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left"/>
+                <Label Grid.Row="0" Grid.Column="1"/>
+                <ui:Button Appearance="Success" Command="{Binding NavigateToAddLeverantorCommand}"   Width="120"  Content="Ny leverantör" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button Appearance="Danger"  Width="80" Content="Radera" Grid.Column="3" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button Appearance="Primary" VerticalAlignment="Center" Width="80" Content="Ändra" Grid.Column="4" Grid.Row="0" />                
 
             </Grid>
             </StackPanel>
             <!-- END BUTTON HEADER -->
 
 
-            <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto">
+            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto">
 
-            <ui:DataGrid Name="grdLeverantorer" AutoGenerateColumns="False"  
-                 SelectionMode="Single"  AlternatingRowBackground="#404040" ItemsSource="{Binding Leverantorer, Mode=TwoWay}" >
+            <ui:DataGrid Name="grdLeverantorer" AutoGenerateColumns="False" Margin="0" HeadersVisibility="Column" CanUserAddRows="false"  CanUserDeleteRows="False" 
+                 SelectionMode="Single" IsReadOnly="True" SelectionUnit="FullRow"  GridLinesVisibility="Horizontal"  AlternatingRowBackground="#404040" ItemsSource="{Binding Leverantorer, Mode=TwoWay}" >
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Namn"  Width="*"  Binding="{Binding Namn}" />
-                    <DataGridTextColumn Header="OrgNr" Binding="{Binding OrgNr}" />
-                    <DataGridTextColumn Header="Adress" Width="200" Binding="{Binding Adress}" />
+
+                    <DataGridTextColumn Header=""  Width="0" Visibility="Hidden"  Binding="{Binding LeverantorID, Mode=OneWay }" />                    
+                    <DataGridTextColumn Header="Namn"  Width="*"  Binding="{Binding Namn, Mode=TwoWay }" />
+                    <DataGridTextColumn Header="OrgNr" Width="150" Binding="{Binding OrgNr}" />
+                    <DataGridTextColumn Header="Adress" Width="200" Binding="{Binding Adress, Mode=TwoWay}" />
                 
                 </DataGrid.Columns>
 
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                     
+                        <Style.Triggers>
+                            <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                <Setter Property="Background" Value="#555555" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="FontWeight" Value="Bold" />
+
+                            </Trigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
 
             </ui:DataGrid> 
 

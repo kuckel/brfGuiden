@@ -18,16 +18,14 @@ using System.Windows.Shapes;
 namespace brfGuiden.WPF.View
 {
     /// <summary>
-    /// Interaction logic for Leverantorer.xaml
+    /// Interaction logic for AddLeverantorPage.xaml
     /// </summary>
-    public partial class LeverantorPage
+    public partial class AddLeverantorPage
     {
-        public LeverantorPage()
+        public AddLeverantorPage()
         {
-            DataContext = App.ServiceProvider.GetService<LeverantorPageViewModel>();
-            InitializeComponent();
-
-
+            DataContext = App.ServiceProvider.GetService<AddLeverantorPageViewModel>();
+            InitializeComponent(); 
         }
     }
 }

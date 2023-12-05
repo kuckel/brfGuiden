@@ -1,12 +1,17 @@
 ﻿using brfGuiden.Models;
 using brfGuiden.WPF.Interface;
+using brfGuiden.WPF.View;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
+using Wpf.Ui.Controls;
 
 namespace brfGuiden.WPF.ViewModel
 {
@@ -14,13 +19,16 @@ namespace brfGuiden.WPF.ViewModel
     {
         private ObservableCollection<Leverantor>? _leverantorer { get; set; }
         private readonly ILeverantorService? _leverantorService;
+        private readonly MainWindow _mainWin;
 
-        public LeverantorPageViewModel(ILeverantorService leverantorservice)
+        public LeverantorPageViewModel(ILeverantorService leverantorservice, MainWindow mainwindow)
         {
             _leverantorService=leverantorservice;
-            _leverantorer = _leverantorService.GetLeverantorerCollection();  
+            _mainWin = mainwindow;
+              _leverantorer = _leverantorService.GetLeverantorerCollection();  
 
-        }
+        }           
+
 
         public ObservableCollection<Leverantor> Leverantorer
         {
@@ -34,6 +42,20 @@ namespace brfGuiden.WPF.ViewModel
                 }
             }
         }
+
+        [RelayCommand]
+        public void NavigateToAddLeverantor()
+        {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            mw.DataContext = App.ServiceProvider.GetService<MainWindowViewModel>();
+            var activeItem = (NavigationViewItem?)mw.navMain.MenuItems[4];
+            if(activeItem!=null)
+            {
+                mw.navMain.Navigate(typeof(AddLeverantorPage));
+                activeItem.IsActive = true; //Markera i menyn
+            }             
+        }                   
+
 
 
         private string? _message;

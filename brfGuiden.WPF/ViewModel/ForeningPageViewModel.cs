@@ -217,115 +217,11 @@ namespace brfGuiden.WPF.ViewModel
         }
 
 
-        //private string? _organizationNumber;
-        //[Required(ErrorMessage = "Fältet är obligatoriskt.")]
-        //[MinLength(12, ErrorMessage = "OrgNr måste bestå av 12 tecken")]
-        //[MaxLength(12, ErrorMessage = "OrgNr måste bestå av max 12 tecken")]
-        //public string OrganizationNumber
-        //{
-        //    get { return _organizationNumber ?? ""; }
-        //    set
-        //    {
-        //        if (_organizationNumber != value)
-        //        {
-        //            _organizationNumber = value;
-        //            OnPropertyChanged(nameof(OrganizationNumber));
-        //        }
-        //    }
-        //}
-
-
-        //private string? _postNr;
-        //[Required(ErrorMessage = "Fältet är obligatoriskt.")]
-        //[RegularExpression(@"^\d{3} \d{2}$", ErrorMessage = "Felaktigt format i PostNr.")]
-        //[MaxLength(6, ErrorMessage = "Max antal tecken är 6")]
-        //[MinLength(5, ErrorMessage = "Fel antal tecken i PostNr")]
-        //public string PostNr
-        //{
-        //    get { return _postNr ?? ""; }
-        //    set
-        //    {
-        //        if (_postNr != value)
-        //        {
-        //            _postNr = value;
-        //            OnPropertyChanged(nameof(PostNr));
-        //        }
-        //    }
-        //}
-
-        //private string? _foreningNamn;
-        //[Required(ErrorMessage = "Fältet är obligatoriskt.")]
-        //[MaxLength(40, ErrorMessage = "Max antal tecken är 40")]     
-
-        //public string ForeningNamn
-        //{
-        //    get { return _foreningNamn ?? ""; }
-        //    set
-        //    {
-        //        if (_foreningNamn != value)
-        //        {
-        //            _foreningNamn = value;
-        //            OnPropertyChanged(nameof(ForeningNamn));
-        //        }
-        //    }
-        //}
-
-        //private string? _foreningAdress;
-        //[MaxLength(40, ErrorMessage = "Max antal tecken är 40")]
-        //public string ForeningAdress
-        //{
-        //    get { return _foreningAdress ?? ""; }
-        //    set
-        //    {
-        //        if (_foreningAdress != value)
-        //        {
-        //            _foreningAdress = value;
-        //            OnPropertyChanged(nameof(ForeningAdress));
-        //        }
-        //    }
-        //}
-
-        //private string? _postOrt;
-        //[MaxLength(40, ErrorMessage = "Max antal tecken är 40")]
-        //public string PostOrt
-        //{
-        //    get { return _foreningAdress ?? ""; }
-        //    set
-        //    {
-        //        if (_postOrt != value)
-        //        {
-        //            _postOrt = value;
-        //            OnPropertyChanged(nameof(PostOrt));
-        //        }
-        //    }
-        //}
-
-
 
 
         #region VALIDATION
 
-        //public string this[string columnName]
-        //{
-        //    get
-        //    {
-        //        var validationContext = new ValidationContext(this, null, null) { MemberName = columnName };
-        //        List<ValidationResult> validationResults = new List<ValidationResult>();
-        //        if (Validator.TryValidateProperty(GetType().GetProperty(columnName).GetValue(this), validationContext, validationResults))
-        //        {
-        //            if (_errors.ContainsKey(columnName))
-        //                _errors.Remove(columnName);
-        //            if (_errors != null && _errors.Count > 0) { HasErrors = true; } else { HasErrors = false; }
-        //            return null;
-        //        }
 
-        //          _errors[columnName] = validationResults.Select(r => r.ErrorMessage).ToList();
-        //        if (_errors != null && _errors.Count > 0) { HasErrors = true; } else { HasErrors = false; }
-        //        return validationResults.First().ErrorMessage;
-
-
-        //    }
-        //}
 
         #endregion 
     }

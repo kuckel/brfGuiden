@@ -132,11 +132,7 @@
             <!-- /Spara knappen -->
 
             
-            <!-- INFOBAR -->
-              <!--<ui:InfoBar  IsOpen="{Binding HasErrors, Converter={StaticResource InverseBooleanConverter}}" 
-                 IsClosable="True" Message="{Binding CleanErrorMessage}"  Severity="Error"  Grid.Row="5" Grid.ColumnSpan="2" />-->
 
-          
 
 
         </Grid>

@@ -44,7 +44,8 @@ namespace brfGuiden.WPF
             services.AddScoped<ISnackbarService, SnackbarService >();
             services.AddScoped<ILeverantorService, LeverantorService>();
             services.AddScoped<IContentDialogService, ContentDialogService>();
-
+            services.AddScoped<INavigationService, NavigationService>();
+            
             services.AddSingleton<IContentDialogService, ContentDialogService>();
 
             // View-models
@@ -56,9 +57,11 @@ namespace brfGuiden.WPF
             services.AddTransient<LeverantorPageViewModel>();
             services.AddTransient<StyrelsePageViewModel>();
             services.AddTransient<MainWindowViewModel>();
-            services.AddTransient<LoadingWindow>();
+            services.AddTransient<AddLeverantorPageViewModel>();
+            services.AddTransient<MainWindow>();
+            services.AddTransient<DashboardPage>();
             services.AddTransient<dataContext>();
-
+            
             ServiceProvider = services.BuildServiceProvider();
 
 

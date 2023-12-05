@@ -26,7 +26,7 @@
               IsBackButtonVisible="Collapsed"  Padding="0" FrameMargin="0" FontSize="10" Margin="0"  >
             
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Hem" IsActive="True" Padding="0" Margin="0" TargetPageType="{x:Type pages:DashboardPage }">
+                <ui:NavigationViewItem Content="Hem"  Padding="0" Margin="0" TargetPageType="{x:Type pages:DashboardPage }">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Accessibility28" />
                     </ui:NavigationViewItem.Icon>
