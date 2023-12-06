@@ -25,8 +25,8 @@ namespace brfGuiden.WPF.ViewModel
         {
             _leverantorService=leverantorservice;
             _mainWin = mainwindow;
-              _leverantorer = _leverantorService.GetLeverantorerCollection();  
-
+              _leverantorer = _leverantorService.GetLeverantorerCollection();
+            _countLeverantorer = _leverantorer.Count();
         }           
 
 
@@ -54,8 +54,59 @@ namespace brfGuiden.WPF.ViewModel
                 mw.navMain.Navigate(typeof(AddLeverantorPage));
                 activeItem.IsActive = true; //Markera i menyn
             }             
-        }                   
+        }
 
+
+        [RelayCommand]
+        public void EscKeyPress()
+        {
+
+            Leverantorer.Clear();
+            LoadProgressSpinner(1000);
+            Leverantorer = _leverantorService.GetLeverantorerCollection();  
+
+        }
+
+        [RelayCommand]
+        public void Change()
+        {
+
+
+
+        }
+
+
+        private void LoadProgressSpinner(int ms)
+        {
+
+            LoadingWindow lw = new LoadingWindow();
+            lw.TimeSleep = ms;
+            lw.Owner = Application.Current.MainWindow;
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window is MainWindow)
+                {
+                    lw.Width = ((Window)window).Width;
+                    lw.Height = ((Window)window).Height;
+
+                }
+            }
+            lw.ShowDialog();
+
+
+        }
+
+        private int _countLeverantorer;
+        public int CountLeverantorer
+        {
+            get { return _countLeverantorer; }
+            set
+            {
+                _countLeverantorer = value;
+                OnPropertyChanged(nameof(CountLeverantorer));
+                
+            }
+        }
 
 
         private string? _message;

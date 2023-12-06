@@ -6,11 +6,16 @@
       xmlns:local="clr-namespace:brfGuiden.WPF.View"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      d:DataContext="{d:DesignInstance local:DashboardPage, IsDesignTimeCreatable=False}"  
+      d:DataContext="{d:DesignInstance local:LeverantorPage, IsDesignTimeCreatable=False}"  
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-       Title="leverantörer" Margin="20"     
+       Title="Leverantörer" Margin="20"     
       mc:Ignorable="d"  d:DesignHeight="450" d:DesignWidth="800">
+
+    <Page.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding EscKeyPressCommand}"/>
+    </Page.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition  Height="60" />            
@@ -36,12 +41,22 @@
                     <RowDefinition  Height="*"/>
                 </Grid.RowDefinitions>
 
+                <StackPanel Grid.Column="0" Grid.Row="0" Margin="0 5 0 0 " HorizontalAlignment="Stretch">
+      
+                    <ui:TextBlock   Style="{StaticResource H1Style}" Margin="0"  HorizontalAlignment="Left" >
+                     <Run Text="Leverantörer" />
+                        <Run Text="(" />
+                        <Run Text="{Binding CountLeverantorer}"/>
+                        <Run Text=")" />
+                    </ui:TextBlock>
+                    
 
-                <ui:TextBlock  Text="Leverantörer" Style="{StaticResource H1Style}" Margin="0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left"/>
+                </StackPanel> 
                 <Label Grid.Row="0" Grid.Column="1"/>
-                <ui:Button Appearance="Success" Command="{Binding NavigateToAddLeverantorCommand}"   Width="120"  Content="Ny leverantör" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Margin="0 0 10 0"/>
-                <ui:Button Appearance="Danger"  Width="80" Content="Radera" Grid.Column="3" Grid.Row="0" Margin="0 0 10 0"/>
-                <ui:Button Appearance="Primary" VerticalAlignment="Center" Width="80" Content="Ändra" Grid.Column="4" Grid.Row="0" />                
+                <ui:Button  BorderBrush="black" Background="#1C4D00" BorderThickness="1" Command="{Binding NavigateToAddLeverantorCommand}"   Width="120"  Content="Ny leverantör" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button Background="#811E01" BorderBrush="black" BorderThickness="1" Width="80" Content="Radera" Grid.Column="3" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button Background="#454545" BorderBrush="black" BorderThickness="1" VerticalAlignment="Center" Width="80" 
+                  CommandParameter="{Binding Leverantor.LeverantorId}"   Command="{Binding Path=DataContext.ChangeCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"      Content="Ändra" Grid.Column="4" Grid.Row="0" />                
 
             </Grid>
             </StackPanel>
@@ -51,32 +66,81 @@
             <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto">
 
             <ui:DataGrid Name="grdLeverantorer" AutoGenerateColumns="False" Margin="0" HeadersVisibility="Column" CanUserAddRows="false"  CanUserDeleteRows="False" 
-                 SelectionMode="Single" IsReadOnly="True" SelectionUnit="FullRow"  GridLinesVisibility="Horizontal"  AlternatingRowBackground="#404040" ItemsSource="{Binding Leverantorer, Mode=TwoWay}" >
+                 SelectionMode="Single"  BorderBrush="black" BorderThickness="2" IsReadOnly="True" SelectionUnit="FullRow"  
+                        GridLinesVisibility="All" Foreground="white" AlternationCount="1" ItemsSource="{Binding Leverantorer, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
 
                 <DataGrid.Columns>
-
                     <DataGridTextColumn Header=""  Width="0" Visibility="Hidden"  Binding="{Binding LeverantorID, Mode=OneWay }" />                    
                     <DataGridTextColumn Header="Namn"  Width="*"  Binding="{Binding Namn, Mode=TwoWay }" />
-                    <DataGridTextColumn Header="OrgNr" Width="150" Binding="{Binding OrgNr}" />
-                    <DataGridTextColumn Header="Adress" Width="200" Binding="{Binding Adress, Mode=TwoWay}" />
-                
+                    <DataGridTextColumn Header="OrgNr" Width="140" Binding="{Binding OrgNr}" />
+                    <DataGridTextColumn Header="Adress" Width="230" Binding="{Binding Adress, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="PostNr" Width="70" Binding="{Binding PostNr, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="PostOrt" Width="180" Binding="{Binding PostOrt, Mode=TwoWay}" />                    
                 </DataGrid.Columns>
 
+
                 <DataGrid.Resources>
+                    <!-- STYLE HEADER -->
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="FontSize" Value="25"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Padding" Value="7"/>
+                        <Setter Property="BorderBrush" Value="#000000"/>
+                        <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#3E3E3E " Offset="0"/>
+                                    <GradientStop Color="#000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <!-- STYLE ROW -->
+                    <Style  TargetType="{x:Type DataGridRow}">
+                        
+                        <Style.Triggers>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                <Setter Property="Background" Value="#FF574F4F"/>
+                            </Trigger>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                <Setter Property="Foreground" Value="AliceBlue"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#FF8B1515" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style> 
+
+                        <!-- STYLE COLUMN -->
                     <Style TargetType="{x:Type DataGridCell}">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-                        <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                     
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="White"></Setter>
+                        <Setter Property="FontWeight" Value="Normal"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Border>
+                                        <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="BorderThickness"  Value="0"></Setter>
+                        <Setter Property="Height"  Value="35"></Setter>
+                        <Setter Property="Margin"  Value="5 0 0 0 "></Setter>
                         <Style.Triggers>
                             <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                <Setter Property="Background" Value="#555555" />
+                                <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="BorderThickness" Value="0" />
-                                <Setter Property="FontWeight" Value="Bold" />
-
+                                <Setter Property="FontWeight"  Value="Bold" />
                             </Trigger>
-
                         </Style.Triggers>
+                        <!-- /STYLE COLUMN -->
+                        
+                        
+
                     </Style>
                 </DataGrid.Resources>
 

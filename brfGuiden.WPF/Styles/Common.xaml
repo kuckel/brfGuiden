@@ -197,19 +197,9 @@
     
     <!-- DATAGRID -->
 
-    <Style TargetType="{x:Type GridViewColumnHeader}" x:Key="GridViewHeaderStyle">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
-                    <Border BorderThickness="0,0,0,1" BorderBrush="White" Background="Transparent">
-                        <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Foreground" Value="White" />
-    </Style>
+
+
+
 
     <!-- END DATAGRID -->
 

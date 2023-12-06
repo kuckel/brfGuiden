@@ -3,6 +3,7 @@ using brfGuiden.WPF.Helper;
 using brfGuiden.WPF.Interface;
 using brfGuiden.WPF.Service;
 using brfGuiden.WPF.View;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wpf.Ui.Controls;
 
 namespace brfGuiden.WPF.ViewModel
 {
@@ -68,13 +70,24 @@ namespace brfGuiden.WPF.ViewModel
                     }
                     lw.ShowDialog();
 
+                    MainWindow mw = (MainWindow)Application.Current.MainWindow;
+                    mw.DataContext = App.ServiceProvider.GetService<MainWindowViewModel>();
+                    var activeItem = (NavigationViewItem?)mw.navMain.MenuItems[4];
+                    if (activeItem != null)
+                    {
+                        mw.navMain.Navigate(typeof(LeverantorPage));
+                        activeItem.IsActive = true; //Markera i menyn
+                    }
+
+
 
                 }
                 else
                 {
-                    MessageBox.Show("Ett fel uppstod när leverantören skulle skapas", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Ett fel uppstod när leverantören skulle skapas");
                     return;
-                }
+                }                    
+
 
 
 
