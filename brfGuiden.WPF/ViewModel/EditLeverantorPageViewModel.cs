@@ -1,6 +1,7 @@
 ﻿using brfGuiden.Models;
 using brfGuiden.WPF.Helper;
 using brfGuiden.WPF.Interface;
+using brfGuiden.WPF.Models;
 using brfGuiden.WPF.Service;
 using brfGuiden.WPF.View;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,23 +12,51 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace brfGuiden.WPF.ViewModel
 {
-    public partial class AddLeverantorPageViewModel:ObservableObject
+    public partial class EditLeverantorPageViewModel : ObservableObject
     {
-
-        private ObservableCollection<Leverantor>? _leverantorer { get; set; }
+        private ObservableCollection<Betyg>? _betygLista { get; set; }
         private readonly ILeverantorService? _leverantorService;
         private Leverantor? _leverantor;
         private readonly Util? _util;
+       
 
-        public AddLeverantorPageViewModel(ILeverantorService leverantorservice)
+
+        public EditLeverantorPageViewModel(Leverantor selectedLeverantor) 
         {
-            _leverantorService= leverantorservice;
-            _util= new Util();
-            _leverantor = new Leverantor{LeverantorId = Guid.NewGuid().ToString()}; 
+            _leverantor= selectedLeverantor;
+            _leverantorService = App.ServiceProvider.GetService<ILeverantorService>();  
+            _util = new Util();
+            _betygLista = new ObservableCollection<Betyg>();
+            _betygLista.Add(new Betyg { BetygText = "Ange ett betyg för leverantören", BetygValue = 0 });
+            _betygLista.Add(new Betyg { BetygText = "Undvik denna leverantör", BetygValue = 1 });
+            _betygLista.Add(new Betyg { BetygText = "Dålig leverantör", BetygValue = 2 });
+            _betygLista.Add(new Betyg { BetygText = "Medelmåttig leverantör", BetygValue = 3 });
+            _betygLista.Add(new Betyg { BetygText = "Bra leverantör", BetygValue = 4 });
+            _betygLista.Add(new Betyg { BetygText = "Utmärkt leverantör", BetygValue = 5 });
+
+        }
+
+            
+            
+
+
+
+        public ObservableCollection<Betyg> BetygsLista
+        {
+            get { return _betygLista; }
+            set
+            {
+                if (_betygLista != value)
+                {
+                    _betygLista = value;
+                    OnPropertyChanged(nameof(BetygsLista));
+                }
+            }
         }
 
 
@@ -42,16 +71,18 @@ namespace brfGuiden.WPF.ViewModel
         }
 
 
-        [RelayCommand]
-        public void Save()
+
+        [RelayCommand ]
+        public void Update()
         {
+
             var validationResults = new List<ValidationResult>();
             var validationContext = new ValidationContext(Leverantor, serviceProvider: null, items: null);
 
             if (Validator.TryValidateObject(Leverantor, validationContext, validationResults, validateAllProperties: true) && _leverantor != null)
             {
 
-                Leverantor newLev = _leverantorService.AddLeverantor(_leverantor);
+                Leverantor newLev = _leverantorService.UpdateLeverantor(_leverantor);
                 if (newLev != null)
                 {
 
@@ -65,9 +96,9 @@ namespace brfGuiden.WPF.ViewModel
                         {
                             lw.Width = ((Window)window).Width;
                             lw.Height = ((Window)window).Height;
-
                         }
                     }
+
                     lw.ShowDialog();
 
                     MainWindow mw = (MainWindow)Application.Current.MainWindow;
@@ -84,9 +115,9 @@ namespace brfGuiden.WPF.ViewModel
                 }
                 else
                 {
-                    ShowError("Ett fel uppstod när leverantören skulle skapas");
+                    ShowError("Ett fel uppstod när leverantören skulle uppdateras");
                     return;
-                }                    
+                }
 
 
 
@@ -99,12 +130,24 @@ namespace brfGuiden.WPF.ViewModel
                 {
                     ShowError(validationResult.ErrorMessage.ToString());
                     HasErrors = true;
-                }                    
+                }
 
             }
 
 
+
         }
+
+
+
+
+
+
+
+
+
+
+
 
 
         private void ShowError(string errorMessage)
@@ -122,57 +165,6 @@ namespace brfGuiden.WPF.ViewModel
             messageBox.ShowDialogAsync();
         }
 
-
-
-        private string? _txtNameErrorMessage;
-        public string TxtNameErrorMessage
-        {
-            get { return _txtNameErrorMessage; }
-            set
-            {
-                _txtNameErrorMessage = value;
-                OnPropertyChanged(nameof(TxtNameErrorMessage));
-            }
-        }
-        private string? _txtOrgNrErrorMessage;
-        public string TxtOrgNrErrorMessage
-        {
-            get { return _txtOrgNrErrorMessage; }
-            set
-            {
-                _txtOrgNrErrorMessage = value;
-                OnPropertyChanged(nameof(TxtOrgNrErrorMessage));
-            }
-        }
-
-
-
-        private bool _isNameFocused;
-        public bool IsNameFocused
-        {
-            get { return _isNameFocused; }
-            set
-            {
-                _isNameFocused = value;
-                OnPropertyChanged(nameof(IsNameFocused));
-            }
-        }
-
-
-
-        private bool _isOrgNrFocused;
-        public bool IsOrgNrFocused
-        {
-            get { return _isOrgNrFocused; }
-            set
-            {
-                _isOrgNrFocused = value;
-                OnPropertyChanged(nameof(IsOrgNrFocused));
-            }
-        }
-
-
-
         private bool _hasErrors;
         public bool HasErrors
         {
@@ -187,6 +179,20 @@ namespace brfGuiden.WPF.ViewModel
             }
         }
 
+
+        private int _betyg;
+        public int Betyg
+        {
+            get { return _betyg; }
+            set
+            {
+                if (_betyg != value)
+                {
+                    _betyg = value;
+                    OnPropertyChanged(nameof(Betyg));
+                }
+            }
+        }
 
 
     }

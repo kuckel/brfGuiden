@@ -53,10 +53,10 @@
 
                 </StackPanel> 
                 <Label Grid.Row="0" Grid.Column="1"/>
-                <ui:Button  BorderBrush="black" Background="#1C4D00" BorderThickness="1" Command="{Binding NavigateToAddLeverantorCommand}"   Width="120"  Content="Ny leverantör" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Margin="0 0 10 0"/>
-                <ui:Button Background="#811E01" BorderBrush="black" BorderThickness="1" Width="80" Content="Radera" Grid.Column="3" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button  BorderBrush="black" Background="#133300" BorderThickness="1" Command="{Binding NavigateToAddLeverantorCommand}"   Width="120"  Content="Ny leverantör" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button Background="#651801" BorderBrush="black" BorderThickness="1" Width="80" Content="Radera" Grid.Column="3" Grid.Row="0" Margin="0 0 10 0"/>
                 <ui:Button Background="#454545" BorderBrush="black" BorderThickness="1" VerticalAlignment="Center" Width="80" 
-                  CommandParameter="{Binding Leverantor.LeverantorId}"   Command="{Binding Path=DataContext.ChangeCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"      Content="Ändra" Grid.Column="4" Grid.Row="0" />                
+                   Content="Ändra" Grid.Column="4" Grid.Row="0" Command="{Binding ChangeCommand}" CommandParameter="{Binding SelectedLeverantor}" />                
 
             </Grid>
             </StackPanel>
@@ -65,9 +65,10 @@
 
             <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto">
 
-            <ui:DataGrid Name="grdLeverantorer" AutoGenerateColumns="False" Margin="0" HeadersVisibility="Column" CanUserAddRows="false"  CanUserDeleteRows="False" 
+            <ui:DataGrid Name="grdLeverantorer" AutoGenerateColumns="False" Margin="0" HeadersVisibility="Column" CanUserAddRows="false" 
+                 CanUserDeleteRows="False" SelectedItem="{Binding Path=SelectedLeverantor, Mode=TwoWay}" 
                  SelectionMode="Single"  BorderBrush="black" BorderThickness="2" IsReadOnly="True" SelectionUnit="FullRow"  
-                        GridLinesVisibility="All" Foreground="white" AlternationCount="1" ItemsSource="{Binding Leverantorer, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                 GridLinesVisibility="All" Foreground="white" AlternationCount="1" ItemsSource="{Binding Leverantorer, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header=""  Width="0" Visibility="Hidden"  Binding="{Binding LeverantorID, Mode=OneWay }" />                    
@@ -113,7 +114,7 @@
                         </Style.Triggers>
                     </Style> 
 
-                        <!-- STYLE COLUMN -->
+                    <!-- STYLE COLUMN -->
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="VerticalContentAlignment" Value="Center" />
                         <Setter Property="Foreground" Value="White"></Setter>

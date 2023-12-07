@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ViewModel\ViewModelLocator.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Assets\fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Assets\house.png" />
     <None Remove="Assets\login.png" />
@@ -60,10 +56,6 @@
     <Resource Include="Assets\house.png" />
     <Resource Include="Assets\login.png" />
     <Resource Include="Assets\login2.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,146 @@
+﻿<Page x:Class="brfGuiden.WPF.View.EditLeverantorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:brfGuiden.WPF.View"
+       xmlns:helpers="clr-namespace:brfGuiden.WPF.Helper" 
+      d:DataContext="{d:DesignInstance local:EditLeverantorPage, IsDesignTimeCreatable=False}"  
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      mc:Ignorable="d" Margin="20" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Editera leverantör">
+    
+    <Page.Resources>
+        <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <helpers:BooleanToHeightConverter x:Key="BooleanToHeightConverter" />
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="60" />
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ui:TextBlock x:Name="txtHeaderName"  Text="{Binding Leverantor.Namn, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H1Style}" Margin="0" Grid.Column="0" Grid.Row="0"/>
+        <ui:TextBlock x:Name="txtID"  Text="{Binding Leverantor.LeverantorId, Mode=TwoWay}" Style="{StaticResource H2Style}" Margin="0" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0"/>
+
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0 10 0 0" HorizontalAlignment="Stretch" Width="auto" >
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+                <RowDefinition  Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+           
+
+
+            <!-- LEVERANTOR NAMN -->
+            <StackPanel Margin="0 0 7 10" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                <Label Content="Leverantör namn:" Target="{Binding ElementName=txtNamn}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtNamn"  MaxLength="40"
+                    PlaceholderText="Leverantörens namn" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Leverantor.Namn, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+
+            </StackPanel>
+            <!-- /LEVERANTOR NAMN -->
+
+
+            <!-- LEVERANTOR ORGNR -->
+            <StackPanel Margin="7 0 0 10" Grid.Row="1" Grid.Column="2">
+                <Label Content="OrganisationsNummer:" Target="{Binding ElementName=txtOrgNr}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtOrgNr"  MaxLength="12"
+                    PlaceholderText="OrganisationsNr" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Leverantor.OrgNr, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+
+            </StackPanel>
+            <!-- /LEVERANTOR ORGNR -->
+
+
+            <!-- LEVERANTOR ADRESS -->
+            <StackPanel Margin="0 0 0 10" Grid.Row="2" Grid.ColumnSpan="3">
+                <Label Content="Adress/Gata:" Target="{Binding ElementName=txtAdress}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtAdress"  MaxLength="40"
+                    PlaceholderText="Adress" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Leverantor.Adress, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+            </StackPanel>
+            <!-- /LEVERANTOR ADRESS-->
+
+
+
+            <!-- LEVERANTOR POSTNR -->
+            <StackPanel Margin="0 0 7 10" Grid.Row="3" Grid.Column="0">
+                <Label Content="PostNr:" Target="{Binding ElementName=txtPostNr}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtPostNr"  MaxLength="6"
+                    PlaceholderText="PostNr" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Leverantor.PostNr, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+            </StackPanel>
+            <!-- /LEVERANTOR POSTNR-->
+
+            <!-- LEVERANTOR POSTORT -->
+            <StackPanel Margin="7 0 7 10" Grid.Row="3" Grid.Column="1">
+                <Label Content="PostOrt:" Target="{Binding ElementName=txtPostOrt}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtPostOrt"  MaxLength="40"
+                    PlaceholderText="Ort" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Leverantor.PostOrt, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+            </StackPanel>
+            <!-- /LEVERANTOR POSTORT-->
+
+            <!-- LEVERANTOR WWW -->
+            <StackPanel Margin="7 0 0 10" Grid.Row="3" Grid.Column="2">
+                <Label Content="Hemsida:" Target="{Binding ElementName=txtHemsida}" />
+                <ui:TextBox  Width="auto" HorizontalAlignment="Stretch" x:Name="txtHemsida"  MaxLength="40"
+                    PlaceholderText="www.hemsida.se" 
+                  Style="{StaticResource TextboxStyle}"  Text="{Binding Leverantor.Hemsida, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+            </StackPanel>
+            <!-- /LEVERANTOR WWW-->
+
+
+            <!-- LEVERANTOR BETYG-->
+            <StackPanel Margin="0 0 7 10" Grid.Row="4" Grid.ColumnSpan="3">
+                <Label Content="Betygsätt leverantör:" Target="{Binding ElementName=cboBetyg}" />
+                <ComboBox  x:Name="cboBetyg" IsEditable="False" ItemsSource="{Binding BetygsLista}" DisplayMemberPath="BetygText">
+
+                </ComboBox> 
+            </StackPanel>
+            <!-- /LEVERANTOR BETYG-->
+
+
+
+
+
+            <!-- Spara knappen -->
+            <StackPanel Margin="0 15 0 10" Grid.Row="5" Grid.ColumnSpan="3">
+                <ui:Button Style="{StaticResource BlueButtonStyle}" Icon="Save16" Content=" Uppdatera leverantör " 
+                           Command="{Binding UpdateCommand}"   HorizontalAlignment="Stretch"/>
+            </StackPanel>
+            <!-- /Spara knappen -->
+
+
+
+        </Grid>
+
+
+
+
+
+
+
+
+
+
+    </Grid>
+</Page>

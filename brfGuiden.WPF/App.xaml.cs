@@ -49,6 +49,7 @@ namespace brfGuiden.WPF
             services.AddSingleton<IContentDialogService, ContentDialogService>();
 
             // View-models
+            //services.AddScoped<EditLeverantorPageViewModel>();
             services.AddTransient<BostadPageViewModel>();
             services.AddTransient<DashboardViewModel>();
             services.AddTransient<ForeningPageViewModel>();
@@ -61,7 +62,8 @@ namespace brfGuiden.WPF
             services.AddTransient<MainWindow>();
             services.AddTransient<DashboardPage>();
             services.AddTransient<dataContext>();
-            
+            services.AddTransient<EditLeverantorPageViewModel>();
+
             ServiceProvider = services.BuildServiceProvider();
 
 

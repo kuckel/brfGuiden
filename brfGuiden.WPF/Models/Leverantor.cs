@@ -33,4 +33,6 @@ public partial class Leverantor
     public int? Betyg { get; set; }
 
     public string? Hemsida { get; set; }
+    public DateTime? Skapad { get; set; }
+    public DateTime? Modifierad { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using brfGuiden.Models;
+using brfGuiden.WPF.Helper;
 using brfGuiden.WPF.Interface;
 using brfGuiden.WPF.View;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace brfGuiden.WPF.ViewModel
@@ -19,15 +21,51 @@ namespace brfGuiden.WPF.ViewModel
     {
         private ObservableCollection<Leverantor>? _leverantorer { get; set; }
         private readonly ILeverantorService? _leverantorService;
-        private readonly MainWindow _mainWin;
+        private readonly INavigationService? _navigationService;
+        private Leverantor? _selectedLeverantor;
+        private readonly Util _util;        
 
-        public LeverantorPageViewModel(ILeverantorService leverantorservice, MainWindow mainwindow)
+
+
+        public LeverantorPageViewModel(ILeverantorService leverantorservice, INavigationService navigationService)
         {
             _leverantorService=leverantorservice;
-            _mainWin = mainwindow;
+            _navigationService=navigationService;
+               _util = new Util(); 
               _leverantorer = _leverantorService.GetLeverantorerCollection();
             _countLeverantorer = _leverantorer.Count();
-        }           
+        }
+
+
+
+        public Leverantor SelectedLeverantor
+        {
+            get
+            {
+                return _selectedLeverantor;
+            }
+            set
+            {
+                _selectedLeverantor = value;
+                OnPropertyChanged(nameof(SelectedLeverantor));
+            }
+        }
+
+        private void ShowError(string errorMessage, string title)
+        {
+
+            var messageBox = new Wpf.Ui.Controls.MessageBox();
+            messageBox.BorderThickness = new System.Windows.Thickness(2);
+            var converter = new System.Windows.Media.BrushConverter();
+            messageBox.BorderBrush = _util.ConvertColour("#000000");
+            messageBox.Background = _util.ConvertColour("#404040");
+            messageBox.BorderThickness = new System.Windows.Thickness(2);
+            messageBox.Content = errorMessage;
+            messageBox.Title = title;
+            messageBox.CloseButtonText = "Stäng";
+            messageBox.ShowDialogAsync();
+        }
+
 
 
         public ObservableCollection<Leverantor> Leverantorer
@@ -53,8 +91,10 @@ namespace brfGuiden.WPF.ViewModel
             {
                 mw.navMain.Navigate(typeof(AddLeverantorPage));
                 activeItem.IsActive = true; //Markera i menyn
-            }             
-        }
+            }                
+        }                 
+            
+
 
 
         [RelayCommand]
@@ -67,13 +107,41 @@ namespace brfGuiden.WPF.ViewModel
 
         }
 
+       
+
         [RelayCommand]
-        public void Change()
+        public void Change(Leverantor lev)
         {
+            if(lev != null)
+            {
+
+                
+
+                MainWindow mw = (MainWindow)Application.Current.MainWindow;
+                mw.DataContext = App.ServiceProvider.GetService<MainWindowViewModel>();
+                var activeItem = (NavigationViewItem?)mw.navMain.MenuItems[4];
+                if (activeItem != null)
+                {
+
+                    EditLeverantorPageViewModel x = new EditLeverantorPageViewModel(lev);
 
 
+                    mw.navMain.Navigate(typeof(EditLeverantorPage), x );
+                    
+                    activeItem.IsActive = true; //Markera i menyn                    
+
+                }
+            }
+            else
+            {
+                ShowError("Vänligen välj en leverantör i listan","Saknar leverantör");
+                return; 
+            }
 
         }
+
+
+
 
 
         private void LoadProgressSpinner(int ms)

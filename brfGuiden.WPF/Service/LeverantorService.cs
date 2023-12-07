@@ -46,11 +46,30 @@ namespace brfGuiden.WPF.Service
         {
             try
             {
+                leverantor.Skapad = DateTime.Now;  
                 _context.Leverantorer.Add(leverantor);
                 _context.Entry(leverantor).State = EntityState.Added;
                 _context.SaveChanges();
                 return leverantor;
             }
+            catch (Exception)
+            {
+                //_log.LogCritical(ex.Message + ex.InnerException ?? "");
+                return null;
+            }
+        }
+
+
+        public Leverantor UpdateLeverantor(Leverantor leverantor)
+        {
+            try
+            {
+                leverantor.Modifierad = DateTime.Now;  
+                _context.Entry(leverantor).State = EntityState.Modified;
+                _context.SaveChanges();
+                return leverantor;
+            }                
+
             catch (Exception)
             {
                 //_log.LogCritical(ex.Message + ex.InnerException ?? "");
