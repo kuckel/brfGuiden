@@ -15,6 +15,8 @@ namespace brfGuiden.WPF.Interface
         Leverantor AddLeverantor(Leverantor leverantor);
         ObservableCollection<Leverantor> GetLeverantorerCollection();
         Leverantor UpdateLeverantor(Leverantor leverantor);
+
+        bool DeleteLeverantor(Leverantor leverantor);
     }
 
 }

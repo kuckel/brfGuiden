@@ -197,6 +197,10 @@
     
     <!-- DATAGRID -->
 
+      <Style x:Key="CenterDataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      </Style>
+
 
 
 

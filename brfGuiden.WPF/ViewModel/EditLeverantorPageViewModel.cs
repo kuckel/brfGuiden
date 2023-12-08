@@ -23,7 +23,7 @@ namespace brfGuiden.WPF.ViewModel
         private readonly ILeverantorService? _leverantorService;
         private Leverantor? _leverantor;
         private readonly Util? _util;
-       
+        private Betyg? _selectedBetyg;       
 
 
         public EditLeverantorPageViewModel(Leverantor selectedLeverantor) 
@@ -39,10 +39,25 @@ namespace brfGuiden.WPF.ViewModel
             _betygLista.Add(new Betyg { BetygText = "Bra leverantör", BetygValue = 4 });
             _betygLista.Add(new Betyg { BetygText = "Utmärkt leverantör", BetygValue = 5 });
 
+            if(_leverantor.LeverantorBetyg != null && _betygLista!=null)
+            {
+                SelectedBetyg = _betygLista.FirstOrDefault(x => x.BetygValue == _leverantor.LeverantorBetyg); 
+            }            
+
+
+
         }
 
-            
-            
+
+        public Betyg SelectedBetyg
+        {
+            get { return _selectedBetyg; }
+            set
+            {
+                _selectedBetyg = value;
+                OnPropertyChanged(nameof(SelectedBetyg));
+            }
+        }
 
 
 
@@ -71,6 +86,58 @@ namespace brfGuiden.WPF.ViewModel
         }
 
 
+        [RelayCommand]
+        public void Delete()
+        {
+
+
+            System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Är du säker på att du vill radera den valda leverantören?", "Radera", System.Windows.MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case System.Windows.MessageBoxResult.No:
+                    return;
+          }
+  
+
+
+            if (_leverantor==null) {  return; }
+
+            bool delResult = _leverantorService.DeleteLeverantor(_leverantor);
+
+            // Show loading
+            LoadingWindow lw = new LoadingWindow();
+            lw.TimeSleep = 3000;
+            lw.Owner = Application.Current.MainWindow;
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window is MainWindow)
+                {
+                    lw.Width = ((Window)window).Width;
+                    lw.Height = ((Window)window).Height;
+                }
+            }
+
+            lw.ShowDialog();
+
+            if (delResult)
+            {
+                MainWindow mw = (MainWindow)Application.Current.MainWindow;
+                mw.DataContext = App.ServiceProvider.GetService<MainWindowViewModel>();
+                var activeItem = (NavigationViewItem?)mw.navMain.MenuItems[4];
+                if (activeItem != null)
+                {
+                    mw.navMain.Navigate(typeof(LeverantorPage));
+                    activeItem.IsActive = true; //Markera i menyn
+                }
+            }
+            else
+            {
+                ShowError("Ett fel uppstod när leverantören skulle raderas");
+                return;
+            }
+
+        }
+
 
         [RelayCommand ]
         public void Update()
@@ -82,6 +149,7 @@ namespace brfGuiden.WPF.ViewModel
             if (Validator.TryValidateObject(Leverantor, validationContext, validationResults, validateAllProperties: true) && _leverantor != null)
             {
 
+                _leverantor.LeverantorBetyg = SelectedBetyg.BetygValue;   
                 Leverantor newLev = _leverantorService.UpdateLeverantor(_leverantor);
                 if (newLev != null)
                 {

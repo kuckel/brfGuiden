@@ -51,20 +51,7 @@ namespace brfGuiden.WPF.ViewModel
             }
         }
 
-        private void ShowError(string errorMessage, string title)
-        {
 
-            var messageBox = new Wpf.Ui.Controls.MessageBox();
-            messageBox.BorderThickness = new System.Windows.Thickness(2);
-            var converter = new System.Windows.Media.BrushConverter();
-            messageBox.BorderBrush = _util.ConvertColour("#000000");
-            messageBox.Background = _util.ConvertColour("#404040");
-            messageBox.BorderThickness = new System.Windows.Thickness(2);
-            messageBox.Content = errorMessage;
-            messageBox.Title = title;
-            messageBox.CloseButtonText = "Stäng";
-            messageBox.ShowDialogAsync();
-        }
 
 
 
@@ -142,6 +129,69 @@ namespace brfGuiden.WPF.ViewModel
 
 
 
+        [RelayCommand]
+        public void Delete(Leverantor lev)
+        {
+
+            if(lev==null)
+            {
+                ShowError("Vänligen välj en leverantör i listan","Saknar leverantör");
+                return;
+            }
+
+            System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Är du säker på att du vill radera den valda leverantören?", "Radera", System.Windows.MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case System.Windows.MessageBoxResult.No:
+                    return;
+            }
+
+
+            bool delResult = _leverantorService.DeleteLeverantor(lev);
+
+            // Show loading
+            LoadingWindow lw = new LoadingWindow();
+            lw.TimeSleep = 3000;
+            lw.Owner = Application.Current.MainWindow;
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window is MainWindow)
+                {
+                    lw.Width = ((Window)window).Width;
+                    lw.Height = ((Window)window).Height;
+                }
+            }
+
+            lw.ShowDialog();
+
+            if (delResult)
+            {
+                 
+                _leverantorer = _leverantorService.GetLeverantorerCollection();   
+
+            }
+            else
+            {
+                ShowError("Ett fel uppstod när leverantören skulle raderas","Error");
+                return;
+            }
+
+        }
+
+
+        private void ShowError(string errorMessage, string title)
+        {
+            var messageBox = new Wpf.Ui.Controls.MessageBox();
+            var converter = new System.Windows.Media.BrushConverter();
+            messageBox.BorderBrush = _util.ConvertColour("#000000");
+            messageBox.Background = _util.ConvertColour("#404040");
+            messageBox.BorderThickness = new System.Windows.Thickness(2);
+            messageBox.Content = errorMessage;
+            messageBox.Title = title;
+            messageBox.CloseButtonText = "Stäng";
+            messageBox.ShowDialogAsync();
+        }
+            
 
 
         private void LoadProgressSpinner(int ms)

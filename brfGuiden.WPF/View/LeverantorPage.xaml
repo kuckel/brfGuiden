@@ -54,7 +54,8 @@
                 </StackPanel> 
                 <Label Grid.Row="0" Grid.Column="1"/>
                 <ui:Button  BorderBrush="black" Background="#133300" BorderThickness="1" Command="{Binding NavigateToAddLeverantorCommand}"   Width="120"  Content="Ny leverantör" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Margin="0 0 10 0"/>
-                <ui:Button Background="#651801" BorderBrush="black" BorderThickness="1" Width="80" Content="Radera" Grid.Column="3" Grid.Row="0" Margin="0 0 10 0"/>
+                <ui:Button Background="#651801" BorderBrush="black" BorderThickness="1" Width="80" Content="Radera" Grid.Column="3" 
+                      Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedLeverantor}" Grid.Row="0" Margin="0 0 10 0"/>
                 <ui:Button Background="#454545" BorderBrush="black" BorderThickness="1" VerticalAlignment="Center" Width="80" 
                    Content="Ändra" Grid.Column="4" Grid.Row="0" Command="{Binding ChangeCommand}" CommandParameter="{Binding SelectedLeverantor}" />                
 
@@ -72,12 +73,23 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header=""  Width="0" Visibility="Hidden"  Binding="{Binding LeverantorID, Mode=OneWay }" />                    
-                    <DataGridTextColumn Header="Namn"  Width="*"  Binding="{Binding Namn, Mode=TwoWay }" />
-                    <DataGridTextColumn Header="OrgNr" Width="140" Binding="{Binding OrgNr}" />
-                    <DataGridTextColumn Header="Adress" Width="230" Binding="{Binding Adress, Mode=TwoWay}" />
-                    <DataGridTextColumn Header="PostNr" Width="70" Binding="{Binding PostNr, Mode=TwoWay}" />
-                    <DataGridTextColumn Header="PostOrt" Width="180" Binding="{Binding PostOrt, Mode=TwoWay}" />                    
-                </DataGrid.Columns>
+                    <DataGridTextColumn Header="Namn"    Width="*"   Binding="{Binding Namn, Mode=TwoWay }" />
+                    <DataGridTextColumn Header="OrgNr"   Width="140" Binding="{Binding OrgNr}" />
+                    <DataGridTextColumn Header="Adress"  Width="230" Binding="{Binding Adress, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="PostNr"  Width="70"  Binding="{Binding PostNr, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="PostOrt" Width="150" Binding="{Binding PostOrt, Mode=TwoWay}" />
+                    <DataGridTextColumn Header="Betyg"   Width="65"  Binding="{Binding LeverantorBetyg, Mode=TwoWay}" >
+                     
+
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>                    
+                    
+
 
 
                 <DataGrid.Resources>
@@ -145,8 +157,31 @@
                     </Style>
                 </DataGrid.Resources>
 
-            </ui:DataGrid> 
+            </ui:DataGrid>
+            
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Width="auto" Margin="0 6 0 0">
 
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="auto"/>
+                        <ColumnDefinition  Width="auto"/>                        
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="auto"/>
+                    </Grid.RowDefinitions>
+
+
+
+                    <ui:Button Grid.Row="0" Grid.Column="0" Background="#003380" BorderBrush="black" BorderThickness="2" 
+                               VerticalAlignment="Center"   Content="&#60; Föregående"  />
+
+                    <ui:Button Grid.Row="0" Grid.Column="1" Margin="10 0 0 0" Background="#003380" BorderBrush="black" BorderThickness="2" 
+                               VerticalAlignment="Center"  Content="Nästa &#62;"  />
+
+                </Grid>
+
+            </StackPanel>
+                  
         </StackPanel> 
         
         

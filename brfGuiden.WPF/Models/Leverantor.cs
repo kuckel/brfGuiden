@@ -30,7 +30,7 @@ public partial class Leverantor
 
     public string? PostOrt { get; set; }
 
-    public int? Betyg { get; set; }
+    public int? LeverantorBetyg { get; set; }
 
     public string? Hemsida { get; set; }
     public DateTime? Skapad { get; set; }

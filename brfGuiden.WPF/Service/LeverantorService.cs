@@ -60,6 +60,26 @@ namespace brfGuiden.WPF.Service
         }
 
 
+        public bool DeleteLeverantor(Leverantor leverantor)
+        {
+            try
+            {
+                _context.Entry(leverantor).State = EntityState.Deleted;
+                _context.SaveChanges();
+                return true;
+            }
+
+            catch (Exception)
+            {
+                //_log.LogCritical(ex.Message + ex.InnerException ?? "");
+                return false;
+            }
+
+        }
+                
+
+
+
         public Leverantor UpdateLeverantor(Leverantor leverantor)
         {
             try

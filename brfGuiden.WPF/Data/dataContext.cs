@@ -84,7 +84,7 @@ public partial class dataContext : DbContext
                 .HasColumnType("varchar(40)")
                 .HasColumnName("LeverantorID");
             entity.Property(e => e.Adress).HasColumnType("varchar(40)");
-            entity.Property(e => e.Betyg).HasDefaultValueSql("0");
+            entity.Property(e => e.LeverantorBetyg).HasDefaultValueSql("0");
             entity.Property(e => e.Hemsida).HasColumnType("varchar(40)");
             entity.Property(e => e.Namn).HasColumnType("varchar(40)");
             entity.Property(e => e.OrgNr).HasColumnType("varchar(12)");
